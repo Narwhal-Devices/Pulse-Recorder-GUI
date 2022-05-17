@@ -312,6 +312,7 @@ class MainWindow(QtWidgets.QMainWindow, pulse_recorder_mainwindow_design.Ui_Main
 def main():
     app = QtWidgets.QApplication(sys.argv)
     # app.setStyle('Fusion')
+    # app.setStyle('Windows')
     app.setStyleSheet(qdarkstyle.load_stylesheet(qt_api='pyqt5'))
 
     window = MainWindow()

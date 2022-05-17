@@ -69,6 +69,7 @@ class SerialThread(QtCore.QThread):
         free_space = dset_records.size - num_current_entries
         if num_new_entries > free_space:
             dset_records.resize(dset_records.size + max(blocksize, num_new_entries) , axis=0)
+        #### THIS MIGHT BE WHERE THE OFF BY ONE ERROR IS THAT ANDY WAS SEEING, WHICH RESULTED IN OCCASSIONAL LINES OF ZEROS IN THE DATASETS
         new_total_entries = num_current_entries + num_new_entries
         dset_records[num_current_entries:new_total_entries] = new_data[:num_new_entries]
         dset_num_entries[0] = new_total_entries
@@ -123,6 +124,7 @@ class SerialThread(QtCore.QThread):
                     self.temp_data_idx += records_idx
                     # if the next data dump can possibly overflow the temp_data, then clear the temp data now. the max records in the buffer is about 530
                     if self.temp_data_idx + 550 > self.temp_data.size or self.save_now:
+                        #### THIS MIGHT BE WHERE THE OFF BY ONE ERROR IS THAT ANDY WAS SEEING, WHICH RESULTED IN OCCASSIONAL LINES OF ZEROS IN THE DATASETS
                         self.add_data_to_dataset(self.temp_data, self.temp_data_idx, self.dset_records, self.dset_num_entries, self.blocksize)
                         self.temp_data_idx = 0
                         self.save_now = False
